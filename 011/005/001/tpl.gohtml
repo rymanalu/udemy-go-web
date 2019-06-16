@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF=8">
+  <title>Hello world!</title>
+</head>
+<body>
+  <ul>
+  {{range .Performers}}
+    <li>{{.Name}}: {{.Quote}}</li>
+  {{end}}
+  </ul>
+
+  <ul>
+  {{range .Instruments}}
+    <li>{{.Manufacturer}} {{.Model}}</li>
+  {{end}}
+  </ul>
+</body>
+</html>
