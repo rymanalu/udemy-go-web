@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF=8">
+  <title>Hello world!</title>
+</head>
+<body>
+{{if gt .Score1 .Score2}}
+  <p>Score 1 &gt; Score 2</p>
+{{end}}
+
+{{if lt .Score1 .Score2}}
+  <p>Score 1 &lt; Score 2</p>
+{{end}}
+
+{{if eq .Score1 .Score2}}
+  <p>Score 1 = Score 2</p>
+{{end}}
+
+{{if lt .Score1 10}}
+  <p>Score 1 &lt; 10</p>
+{{end}}
+</body>
+</html>

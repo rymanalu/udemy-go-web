@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF=8">
+  <title>Hello world!</title>
+</head>
+<body>
+  <h1>Example #1</h1>
+  <ul>
+  {{range .}}
+    <li>{{.}}</li>
+  {{end}}
+  </ul>
+
+  <h1>Example #2</h1>
+  {{if .}}
+    <p>Example #2 - {{.}}</p>
+  {{end}}
+
+  <h1>Example #3</h1>
+  <ul>
+  {{range .}}
+    {{if .Name}}
+      <li>Example #3: {{.Name}}: {{.Quote}}</li>
+    {{end}}
+  {{end}}
+  </ul>
+
+  <h1>Example #4</h1>
+  <ul>
+  {{range .}}
+    {{if and .Name .Alive}}
+      <li>Example #4: {{.Name}}: {{.Quote}}</li>
+    {{end}}
+  {{end}}
+  </ul>
+</body>
+</html>
