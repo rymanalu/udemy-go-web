@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF=8">
+  <title>Hello world!</title>
+</head>
+<body>
+  <h1>{{.Fall.Term}}</h1>
+  <ul>
+  {{range .Fall.Courses}}
+    <li>{{.Number}} - {{.Name}} - {{.Units}}</li>
+  {{end}}
+  </ul>
+
+  <h1>{{.Spring.Term}}</h1>
+  <ul>
+  {{range .Spring.Courses}}
+    <li>{{.Number}} - {{.Name}} - {{.Units}}</li>
+  {{end}}
+  </ul>
+</body>
+</html>
