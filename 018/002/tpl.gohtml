@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Top Hotels in Indonesia</h1>
+  {{range .}}
+    <h2>{{.Name}}</h2>
+    <p>{{.Address}}</p>
+    <p>{{.City}}</p>
+    <p>{{.Region}}</p>
+  {{end}}
+</body>
+</html>
