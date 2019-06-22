@@ -12,7 +12,6 @@ func main() {
 
 	if err != nil {
 		log.Panic(err)
-		return
 	}
 
 	defer li.Close()
@@ -31,10 +30,12 @@ func main() {
 
 func handle(conn net.Conn) {
 	scanner := bufio.NewScanner(conn)
-	defer conn.Close()
 
 	for scanner.Scan() {
 		ln := scanner.Text()
 		fmt.Println(ln)
+		fmt.Fprintf(conn, "I heard you say: %v\n", ln)
 	}
+
+	defer conn.Close()
 }
