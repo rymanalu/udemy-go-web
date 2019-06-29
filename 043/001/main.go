@@ -23,7 +23,7 @@ func image(res http.ResponseWriter, req *http.Request) {
 	f, err := os.Open("150.png")
 
 	if err != nil {
-		http.Error(res, "file not found", 404)
+		http.Error(res, "file not found", http.StatusNotFound)
 		return
 	}
 
@@ -32,7 +32,7 @@ func image(res http.ResponseWriter, req *http.Request) {
 	fi, err := f.Stat()
 
 	if err != nil {
-		http.Error(res, "file not found", 404)
+		http.Error(res, "file not found", http.StatusNotFound)
 		return
 	}
 
