@@ -8,7 +8,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", index)
-	http.Handle("/pics/", http.FileServer(http.Dir("public")))
+	http.Handle("/resources/", http.StripPrefix("/resources", http.FileServer(http.Dir("public"))))
 	log.Fatalln(http.ListenAndServe(":8080", nil))
 }
 
