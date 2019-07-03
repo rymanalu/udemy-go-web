@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -28,8 +29,15 @@ func incrementVisits(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	counter, _ := strconv.Atoi(c.Value)
+	counter, err := strconv.Atoi(c.Value)
+
+	if err != nil {
+		log.Println(err)
+		counter = 0
+	}
+
 	counter++
+
 	c.Value = strconv.Itoa(counter)
 
 	http.SetCookie(w, c)
