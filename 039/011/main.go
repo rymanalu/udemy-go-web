@@ -65,7 +65,7 @@ func index() string {
 	return `<!DOCTYPE html>
 	<html>
 	<head>
-		<meta charset="UTF=8">
+		<meta charset="UTF-8">
 		<title>Index - 011 - 039</title>
 	</head>
 	<body>
@@ -83,7 +83,7 @@ func getApply() string {
 	return `<!DOCTYPE html>
 	<html>
 	<head>
-		<meta charset="UTF=8">
+		<meta charset="UTF-8">
 		<title>Apply - 011 - 039</title>
 	</head>
 	<body>
@@ -104,7 +104,7 @@ func postApply() string {
 	return `<!DOCTYPE html>
 	<html>
 	<head>
-		<meta charset="UTF=8">
+		<meta charset="UTF-8">
 		<title>Apply - 011 - 039</title>
 	</head>
 	<body>

@@ -40,7 +40,7 @@ func serve(conn net.Conn) {
 		body := `<!DOCTYPE html>
 		<html>
 		<head>
-			<meta charset="UTF=8">
+			<meta charset="UTF-8">
 			<title>039 - 010</title>
 		</head>
 		<body>
