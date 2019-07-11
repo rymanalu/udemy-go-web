@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Index</title>
+</head>
+<body>
+  <h3>Your Pictures:</h3>
+  {{if gt (len .) 0}}
+    {{range .}}
+      <img src="/public/pics/{{.}}" width="400px">
+    {{end}}
+  {{else}}
+    <p>You have no pictures.</p>
+  {{end}}
+
+  <form method="post" enctype="multipart/form-data">
+    <input type="file" name="nf">
+    <input type="submit">
+  </form>
+</body>
+</html>
