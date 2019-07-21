@@ -9,12 +9,17 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+// Length is session length
 const Length int = 30
 
-var Users = map[string]models.User{}       // user ID, user
+// Users is users db
+var Users = map[string]models.User{} // user ID, user
+// Sessions is sessions db
 var Sessions = map[string]models.Session{} // session ID, session
-var LastCleaned time.Time = time.Now()
+// LastCleaned is last time the session cleaned
+var LastCleaned = time.Now()
 
+// GetUser returns user based on session
 func GetUser(w http.ResponseWriter, req *http.Request) models.User {
 	// get cookie
 	ck, err := req.Cookie("session")
@@ -39,6 +44,7 @@ func GetUser(w http.ResponseWriter, req *http.Request) models.User {
 	return u
 }
 
+// AlreadyLoggedIn checks if user already logged in
 func AlreadyLoggedIn(w http.ResponseWriter, req *http.Request) bool {
 	ck, err := req.Cookie("session")
 	if err != nil {
@@ -56,6 +62,7 @@ func AlreadyLoggedIn(w http.ResponseWriter, req *http.Request) bool {
 	return ok
 }
 
+// Clean cleans session
 func Clean() {
 	fmt.Println("BEFORE CLEAN") // for demonstration purposes
 	Show()                      // for demonstration purposes
@@ -69,7 +76,7 @@ func Clean() {
 	Show()                     // for demonstration purposes
 }
 
-// for demonstration purposes
+// Show shows session for demonstration purposes
 func Show() {
 	fmt.Println("********")
 	for k, v := range Sessions {
