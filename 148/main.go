@@ -15,7 +15,7 @@ type book struct {
 }
 
 func main() {
-	db, err := sql.Open("postgres", "postgres://manalu:@localhost/udemy_bookstore?sslmode=disable")
+	db, err := sql.Open("postgres", "postgres://username:password@localhost/database_name?sslmode=disable")
 
 	if err != nil {
 		panic(err)
