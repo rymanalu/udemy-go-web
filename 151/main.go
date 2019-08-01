@@ -3,20 +3,23 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"html/template"
 	"net/http"
+	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
 )
 
 type book struct {
-	isbn   string
-	title  string
-	author string
-	price  float32
+	Isbn   string
+	Title  string
+	Author string
+	Price  float32
 }
 
 var db *sql.DB
+var tpl *template.Template
 
 func init() {
 	var err error
@@ -32,6 +35,8 @@ func init() {
 	}
 
 	fmt.Println("You connected to your database")
+
+	tpl = template.Must(template.ParseGlob("templates/*"))
 }
 
 func main() {
@@ -39,7 +44,9 @@ func main() {
 
 	router := httprouter.New()
 	router.GET("/books", index)
-	router.GET("/books/:isbn", show)
+	router.GET("/books/create", create)
+	router.POST("/books/create", store)
+	router.GET("/books/detail/:isbn", show)
 	http.ListenAndServe(":8080", router)
 }
 
@@ -58,7 +65,7 @@ func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	for rows.Next() {
 		bk := book{}
 
-		err := rows.Scan(&bk.isbn, &bk.title, &bk.author, &bk.price)
+		err := rows.Scan(&bk.Isbn, &bk.Title, &bk.Author, &bk.Price)
 
 		if err != nil {
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
@@ -73,9 +80,7 @@ func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	for _, bk := range bks {
-		fmt.Fprintf(w, "%s, %s, %s, $%.2f\n", bk.isbn, bk.title, bk.author, bk.price)
-	}
+	tpl.ExecuteTemplate(w, "index.gohtml", bks)
 }
 
 func show(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -90,7 +95,7 @@ func show(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	bk := book{}
 
-	err := row.Scan(&bk.isbn, &bk.title, &bk.author, &bk.price)
+	err := row.Scan(&bk.Isbn, &bk.Title, &bk.Author, &bk.Price)
 
 	switch {
 	case err == sql.ErrNoRows:
@@ -101,5 +106,42 @@ func show(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	fmt.Fprintf(w, "%s, %s, %s, $%.2f\n", bk.isbn, bk.title, bk.author, bk.price)
+	fmt.Fprintf(w, "%s, %s, %s, $%.2f\n", bk.Isbn, bk.Title, bk.Author, bk.Price)
+}
+
+func create(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	tpl.ExecuteTemplate(w, "create.gohtml", nil)
+}
+
+func store(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	bk := book{
+		Isbn:   r.FormValue("isbn"),
+		Title:  r.FormValue("title"),
+		Author: r.FormValue("author"),
+	}
+
+	p := r.FormValue("price")
+
+	if bk.Isbn == "" || bk.Title == "" || bk.Author == "" || p == "" {
+		http.Error(w, http.StatusText(http.StatusNotAcceptable), http.StatusNotAcceptable)
+		return
+	}
+
+	f64, err := strconv.ParseFloat(p, 32)
+
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusNotAcceptable), http.StatusNotAcceptable)
+		return
+	}
+
+	bk.Price = float32(f64)
+
+	_, err = db.Exec("insert into books (isbn, title, author, price) values ($1, $2, $3, $4)", bk.Isbn, bk.Title, bk.Author, bk.Price)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/books", http.StatusSeeOther)
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+{{template "head" "Index"}}
+<body>
+  <div class="container">
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {{range .}}
+      <tr>
+        <td>{{.Isbn}}</td>
+        <td>{{.Title}}</td>
+        <td>{{.Author}}</td>
+        <td>{{.Price}}</td>
+        <td></td>
+      </tr>
+    {{end}}
+    </tbody>
+    </table>
+  </div>
+
+  {{template "js"}}
+</body>
+</html>
