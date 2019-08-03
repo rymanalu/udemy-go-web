@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+{{template "head" "Edit"}}
+<body>
+  <div class="container">
+    <form method="post">
+      <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input type="text" class="form-control" id="isbn" name="isbn" value="{{.Isbn}}" readonly>
+      </div>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{.Title}}">
+      </div>
+      <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text" class="form-control" id="author" name="author" value="{{.Author}}">
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" name="price" value="{{.Price}}">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  {{template "js"}}
+</body>
+</html>
